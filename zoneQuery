@@ -1,0 +1,22 @@
+#getting the zone
+
+import boto.route53
+conn = boto.route53.connect_to_region('universal')
+conn.get_zones()
+
+#testing for credentials
+
+boto.config.sections()
+
+#Getting the DNS records line by line.
+
+import boto.route53
+conn = boto.route53.connect_to_region('universal')
+zone = conn.get_zone("syseng-interview.amplify.")
+records = zone.get_records()
+records = filter(lambda x: x.type == 'A', records)
+len(records)
+records = records[:100]
+for record in records:
+    print '%s,%s,%s,%s' % (record.name, record.type, record.resource_records[0], record.ttl)
+
